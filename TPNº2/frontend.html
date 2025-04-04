@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini App de Tareas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 0.5em;
+      margin-top: 0.5em;
+      font-size: 1em;
+    }
+    #mensaje {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Agregar tarea</h1>
+  <input type="text" id="tareaInput" placeholder="Escribe una tarea">
+  <button onclick="enviarTarea()">Agregar</button>
+  <div id="mensaje"></div>
+
+  <!-- Enlace a backend y base de datos -->
+  <script src="db.js"></script>
+  <script src="backend.js"></script>
+  <script>
+    // FRONTEND - interacción con el backend
+    function enviarTarea() {
+      const input = document.getElementById('tareaInput');
+      const mensaje = document.getElementById('mensaje');
+
+      const respuesta = backend.procesarTarea(input.value); // Escalabilidad ✔
+      mensaje.textContent = respuesta;
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
