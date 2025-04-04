@@ -21,6 +21,10 @@
       margin-top: 1em;
       font-weight: bold;
     }
+    #listaTareas {
+      margin-top: 1em;
+      list-style-type: disc;
+    }
   </style>
 </head>
 <body>
@@ -30,19 +34,37 @@
   <button onclick="enviarTarea()">Agregar</button>
   <div id="mensaje"></div>
 
-  <!-- Enlace a backend y base de datos -->
+  <h2>Tareas guardadas</h2>
+  <ul id="listaTareas"></ul>
+
   <script src="db.js"></script>
   <script src="backend.js"></script>
   <script>
-    // FRONTEND - interacción con el backend
     function enviarTarea() {
       const input = document.getElementById('tareaInput');
       const mensaje = document.getElementById('mensaje');
 
-      const respuesta = backend.procesarTarea(input.value); // Escalabilidad ✔
+      const respuesta = backend.procesarTarea(input.value);
       mensaje.textContent = respuesta;
       input.value = "";
+
+      mostrarTareas(); // Mostrar tareas actualizadas
     }
+
+    function mostrarTareas() {
+      const lista = document.getElementById('listaTareas');
+      lista.innerHTML = ""; // Limpia la lista anterior
+
+      const tareas = baseDeDatos.listar(); // Recupera tareas del "backend"
+      tareas.forEach(tarea => {
+        const item = document.createElement('li');
+        item.textContent = tarea;
+        lista.appendChild(item);
+      });
+    }
+
+    // Mostrar tareas al cargar por primera vez
+    mostrarTareas();
   </script>
 </body>
 </html>
